@@ -1,11 +1,8 @@
-import Comment from '@/Components/Shared/Comment';
-import Button from '@/Components/UI/Button';
-import { getOneEvent, addComment } from '@/Lib/Actions/EventActions';
+import { getOneEvent } from '@/Lib/Actions/EventActions';
 import { getUser } from '@/Lib/Actions/UserAction';
 import { myTimestamp } from '@/Lib/Utils/dateAndTime';
 import Image from 'next/image'
 import React from 'react';
-import { IComment } from '@/Lib/Database/Models/EventModel';
 import CommentSection from '@/Components/Shared/CommentSection';
 import EventCheckout from '@/Components/UI/EventCheckout';
 

@@ -1,4 +1,4 @@
-import { getOneEvent } from '@/Lib/Actions/EventActions';
+// import { getOneEvent } from '@/Lib/Actions/EventActions';
 import React from 'react'
 // { params }: { params: Promise<{id: string}> }
 // const { id } = await params;
