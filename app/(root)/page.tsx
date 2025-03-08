@@ -7,10 +7,10 @@ import { getAllEvents } from '@/Lib/Actions/EventActions';
 import Collection from '@/Components/Shared/Collection';
 import { SearchParamProps } from '@/Types';
 
-const Home = async ({ searchParams }: SearchParamProps) => {
-  const page = Number((await searchParams)?.page) || 1;
-  const searchText = ((await searchParams)?.query as string) || "";
-  const category = ((await searchParams)?.category as string) || "";
+const Home = async (search: SearchParamProps) => {
+  const page = Number((await search)?.searchParams?.page) || 1;
+  const searchText = ((await search)?.searchParams?.query as string) || '';
+  const category = ((await search)?.searchParams?.category as string) || '';
 
   const events = await getAllEvents({
     query: searchText,

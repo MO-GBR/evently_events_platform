@@ -7,10 +7,10 @@ import { MdOutlineMarkEmailRead } from "react-icons/md";
 const RegisterPage = () => {
   return (
     <div className='flexBetween w-full'>
-        <img src='/assets/images/sign.jpg' className='img w-[50vw]' />
+        <Image src='/assets/images/sign.jpg' className='img w-[50vw]' alt='banner' width={500} height={500} />
         <div className='w-full flexCenter h-full flex-col'>
             <form className='flex justify-start items-center flex-col w-full h-screen -mt-16' action={RegisterUser}>
-                <img src='/assets/images/logo.svg' className='img w-[200px]' />
+                <Image src='/assets/images/logo.svg' className='img w-[200px]' alt='logo' width={200} height={100} />
                 <label className='inputContainer g1'>
                     <FaRegUser className='img w-[30px] border-0 p-1 bg-white rounded-full' />
                     <input

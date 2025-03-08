@@ -1,11 +1,12 @@
 "use client"
 import React from 'react'
+import Image from 'next/image'
 
 const error = () => {
     return (
         <div className='w-full h-screen flexCenter'>
             <div className='flexCenter flex-col h-[50vh] w-[50vw] border border-gray-400 shadow-xl rounded-2xl'>
-                <img src='/assets/images/logo.svg' className='img w-[200px] m-5' />
+                <Image src='/assets/images/logo.svg' className='img w-[200px] m-5' alt='logo' width={200} height={100} />
                 <p className='text-2xl font-bold text-start'>Somthing went wrong while signing try to:</p>
                 <ul className='p-5 m-5'>
                     <li>1. Write your correct email</li>

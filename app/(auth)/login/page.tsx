@@ -3,6 +3,7 @@ import { signIn, auth } from '@/Lib/auth'
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import React from 'react'
+import Image from 'next/image'
 
 const LoginPage = async () => {
   const session = await auth();
@@ -12,7 +13,7 @@ const LoginPage = async () => {
     <div className='allScreen flexCenter'>
         <div className='w-[300px] h-[350px] border border-gray-600 absolute flexCenter flex-col bg-white/30 rounded-3xl shadow-2xl backdrop-blur-sm'>
           <form action={login} className='flexCenter flex-col w-full'>
-            <img src='/assets/images/logo.svg' className='img w-[100px]' />
+            <Image src='/assets/images/logo.svg' className='img w-[100px]' width={100} height={50} alt='logo' />
             <label className='border border-gray-400 p-2 w-[95%] m-2 rounded-3xl shadow-xl g6'>
               <input
                 className='border-none outline-none w-full bg-transparent'
@@ -38,7 +39,7 @@ const LoginPage = async () => {
             await signIn("google");
           }}>
             <button className='myBtn flex justify-around items-center w-[80%] g4 hover:g2 m-2 text-white font-bold border border-green-200' type="submit">
-              <img src='assets/images/google.png' className='img w-[30px]'/>
+              <Image src='assets/images/google.png' className='img w-[30px]' alt="google" width={30} height={30}/>
               Sign In with google
             </button>
           </form>
@@ -46,7 +47,7 @@ const LoginPage = async () => {
             Create Account
           </Link>
         </div>
-        <img src='assets/images/hero.png' className='img w-[30vw]' />
+        <Image src='assets/images/hero.png' className='img w-[30vw]' alt='hero' width={500} height={500} />
     </div>
   )
 }
