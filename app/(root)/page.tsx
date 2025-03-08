@@ -5,12 +5,13 @@ import Search from '@/Components/Shared/Search';
 import CategoryFilter from '@/Components/Shared/CategoryFilter';
 import { getAllEvents } from '@/Lib/Actions/EventActions';
 import Collection from '@/Components/Shared/Collection';
-import { SearchParamProps } from '@/Types';
+import { PageProps } from '@/Types';
 
-const Home = async ({ searchParams }: SearchParamProps) => {
-  const page = Number(searchParams?.page) || 1;
-  const searchText = (searchParams?.query as string) || "";
-  const category = (searchParams?.category as string) || "";
+const Home = async ({ searchParams }: PageProps) => {
+  const search = await searchParams;
+  const page = Number(search?.page) || 1;
+  const searchText = (search?.query as string) || "";
+  const category = (search?.category as string) || "";
 
   const events = await getAllEvents({
     query: searchText,
