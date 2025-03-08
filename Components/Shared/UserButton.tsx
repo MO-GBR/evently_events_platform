@@ -15,7 +15,7 @@ const UserButton = async () => {
                 user
                 ? (
                     <>
-                        <Image src={userDoc?.photo!} alt='Avatar' width={50} height={50} className='rounded-full cursor-pointer' />
+                        <Image src={userDoc?.photo} alt='Avatar' width={50} height={50} className='rounded-full cursor-pointer' />
                         <form action={async () => {
                             "use server";
                             await signOut();
