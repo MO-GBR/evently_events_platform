@@ -1,4 +1,3 @@
-import FinishOrder from '@/Components/Shared/order/FinishOrder'
 import { getOneEvent } from '@/Lib/Actions/EventActions';
 import React from 'react'
 
