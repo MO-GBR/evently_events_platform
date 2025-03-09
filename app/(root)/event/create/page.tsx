@@ -1,11 +1,17 @@
+'use client'
+
 import DatePicker from "@/Components/Shared/DatePicker";
+import FileUploader from "@/Components/Shared/FileUploader";
 import { categories } from "@/Constants";
 import { createEvent } from "@/Lib/Actions/EventActions";
 import Image from "next/image";
+import { useState } from "react";
 
 const CreateEvent = () => {
+  const [ file, setFile ] = useState('');
+  const CreateNewEvent = createEvent.bind(null, file);
   return (
-    <form className="flexCenter flex-col" action={createEvent}>
+    <form className="flexCenter flex-col" action={CreateNewEvent}>
         <div className="flex items-start justify-center">
           <div className="w-[50vw] h-[80vh] p-10 bg-violet-700 rounded-2xl m-5">
             <label className="flexCenter flex-col">
@@ -30,13 +36,9 @@ const CreateEvent = () => {
               </select>
             </label>
           </div>
-          <div className="flexCenter flex-col border h-screen border-blue-200 p-5 m-5 rounded-xl">
+          <div className="flexCenter flex-col border h-[120vh] border-blue-200 p-5 m-5 rounded-xl">
             <label className="flexCenter">
-                <span className="bg-violet-700 flexCenter p-3 w-[300px] absolute text-center font-bold text-white border border-violet-200 rounded-2xl cursor-pointer">
-                  <Image src="/assets/icons/upload.svg" alt='upload avatar' width={24} height={24} />
-                  Upload an image
-                </span>
-                <input type="file" name="image" />
+              <FileUploader setFile={setFile} uploadType='zone' />
             </label>
             <label className="p-5 w-full">
               <span className="text-center w-full text-blue-900 font-bold">Title</span>

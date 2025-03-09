@@ -1,5 +1,5 @@
 import { getOneEvent } from '@/Lib/Actions/EventActions';
-import { getUser } from '@/Lib/Actions/UserAction';
+import { getUser, getCuttentUser } from '@/Lib/Actions/UserAction';
 import { myTimestamp } from '@/Lib/Utils/dateAndTime';
 import Image from 'next/image'
 import React from 'react';
@@ -19,6 +19,8 @@ const Event = async ({ params }: { params: Promise<{id: string}> }) => {
     const organizer = await getUser(event?.organizer);
 
     const eventData = JSON.parse(JSON.stringify(event));
+
+    const currentUser = await getCuttentUser();
 
     return (
         <div className='w-full flexCenter flex-col'>
@@ -57,7 +59,7 @@ const Event = async ({ params }: { params: Promise<{id: string}> }) => {
                 </div>
             </div>
             <div className='p-[1px] w-[90%] bg-gray-500 opacity-25 m-10' />
-            <CommentSection event={eventData} />
+            { currentUser && <CommentSection event={eventData} /> }
         </div>
     )
 }

@@ -1,6 +1,6 @@
 import type { Config } from "tailwindcss";
-// ./Components/**/*.{js,ts,jsx,tsx,mdx}
-export default {
+import { withUt } from 'uploadthing/tw';
+module.exports = withUt({
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./Components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -92,4 +92,4 @@ export default {
     },
   },
   plugins: [require('tailwindcss-animate')],
-} satisfies Config;
+}) satisfies Config;

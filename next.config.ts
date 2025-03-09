@@ -9,7 +9,10 @@ const nextConfig: NextConfig = {
       },
       {
         hostname: "random.imagecdn.app"
-      }
+      },
+      {
+        hostname: "ez77o93rik.ufs.sh"
+      },
     ]
   },
   experimental: {

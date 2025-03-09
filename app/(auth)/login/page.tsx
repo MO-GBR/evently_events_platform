@@ -39,7 +39,7 @@ const LoginPage = async () => {
             await signIn("google");
           }}>
             <button className='myBtn flex justify-around items-center w-[80%] g4 hover:g2 m-2 text-white font-bold border border-green-200' type="submit">
-              <Image src='assets/images/google.png' className='img w-[30px]' alt="google" width={30} height={30}/>
+              <Image src='/assets/images/google.png' className='img w-[30px]' alt="google" width={30} height={30}/>
               Sign In with google
             </button>
           </form>
@@ -47,7 +47,7 @@ const LoginPage = async () => {
             Create Account
           </Link>
         </div>
-        <Image src='assets/images/hero.png' className='img w-[30vw]' alt='hero' width={500} height={500} />
+        <Image src='/assets/images/hero.png' className='img w-[30vw]' alt='hero' width={500} height={500} />
     </div>
   )
 }

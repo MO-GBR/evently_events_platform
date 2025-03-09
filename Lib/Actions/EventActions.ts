@@ -11,7 +11,7 @@ import fs from 'fs';
 import { categories } from "@/Constants";
 import { redirect } from "next/navigation";
 
-export const createEvent = async (formData: FormData) => {
+export const createEvent = async (imgURL: string, formData: FormData) => {
     const user = await getCuttentUser();
 
     const username = user.username;
@@ -20,8 +20,6 @@ export const createEvent = async (formData: FormData) => {
     const description = formData.get("description") as string;
     const details = formData.get("details") as string;
     const location = formData.get("location") as string;
-
-    const image = formData.get("image") as File;
 
     const price = formData.get("price") as string;
     const category = formData.get("category") as string;
@@ -33,31 +31,7 @@ export const createEvent = async (formData: FormData) => {
     const endDate = formData.get("endDate") as string;
 
     try {
-        const uploadDir = process.env.UPLOAD_DIR;
-        const imgSrc = process.env.IMG_SRC;
-
-        const photoDir = `${uploadDir}${username}/events`;
-        const createPhoto = `${photoDir}/${image.name}`;
-        const savePhoto = `${imgSrc}${username}/events/${image.name}`;
-
-        if(image.name == "undefined") {
-            throw new Error("Image is required")
-        } else {
-            if(!fs.existsSync(photoDir)) {
-                fs.mkdir(photoDir, { recursive: true }, (error) => {
-                    handleError(error);
-                });
-            }
-        
-            const arrayBuffer = await image.arrayBuffer();
-            const buffer = new Uint8Array(arrayBuffer);
-        
-            fs.writeFile(createPhoto, buffer, (error) => {
-                handleError(error);
-            });
-        };
-
-        if(!title || !description || !image || !location || !startDate || !startTime || !endTime || !endDate || !price) throw new Error("All Fields Are Required");
+        if(!title || !description || !location || !startDate || !startTime || !endTime || !endDate || !price) throw new Error("All Fields Are Required");
 
         await connectToDatabase();
 
@@ -68,7 +42,7 @@ export const createEvent = async (formData: FormData) => {
             title,
             description,
             location,
-            image: savePhoto,
+            image: imgURL,
             price,
             startTime,
             startDate,
@@ -95,7 +69,7 @@ export const getOneEvent = async (id: string) => {
     }
 };
 
-export const updateEvent = async (eventId: string, formData: FormData) => {
+export const updateEvent = async ({ eventId, imgURL }: { eventId: string, imgURL: string }, formData: FormData) => {
     const user = await getCuttentUser();
 
     const username = user.username;
@@ -104,8 +78,6 @@ export const updateEvent = async (eventId: string, formData: FormData) => {
     const description = formData.get("description") as string;
     const details = formData.get("details") as string;
     const location = formData.get("location") as string;
-
-    const image = formData.get("image") as File;
 
     const price = formData.get("price") as string;
     const category = formData.get("category") as string;
@@ -122,48 +94,8 @@ export const updateEvent = async (eventId: string, formData: FormData) => {
 
     try {
         if(user.username !== eventOrganizer.username) throw new Error("You are not allowed");
-        
-        const uploadDir = process.env.UPLOAD_DIR;
-        const imgSrc = process.env.IMG_SRC;
 
-        const photoDir = `${uploadDir}${username}/events`;
-        const createPhoto = `${photoDir}/${image.name}`;
-        const savePhoto = `${imgSrc}${username}/events/${image.name}`;
-
-        const imageArray = event?.image.split("/");
-        const imageName = imageArray[imageArray.length - 1] as string;
-
-        const deletedPhoto = `${photoDir}/${imageName}`;
-
-        if(image.name == "undefined") {
-            console.log("There is no image");
-        } else {
-            if(fs.existsSync(deletedPhoto)) {
-                fs.unlink(deletedPhoto, (err) => {
-                    if (err) {
-                        handleError(err)
-                    }
-                    console.log('file deleted')
-                });
-            };
-
-            if(!fs.existsSync(photoDir)) {
-                fs.mkdir(photoDir, { recursive: true }, (error) => {
-                    handleError(error);
-                });
-            }
-        
-            const arrayBuffer = await image.arrayBuffer();
-            const buffer = new Uint8Array(arrayBuffer);
-        
-            fs.writeFile(createPhoto, buffer, (error) => {
-                handleError(error);
-            });
-        };
-
-        const eventImg = image.name == "undefined" ? event.image : savePhoto;
-
-        if(!title || !description || !image || !location || !startDate || !startTime || !endTime || !endDate || !price) throw new Error("All Fields Are Required");
+        if(!title || !description || !location || !startDate || !startTime || !endTime || !endDate || !price) throw new Error("All Fields Are Required");
 
         await connectToDatabase();
 
@@ -175,7 +107,7 @@ export const updateEvent = async (eventId: string, formData: FormData) => {
             description,
             details,
             location,
-            image: eventImg,
+            image: imgURL,
             price,
             category,
             startDate,

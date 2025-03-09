@@ -6,6 +6,7 @@ import UserButton from './UserButton'
 import { auth } from '@/Lib/auth';
 
 import { headers } from "next/headers";
+import Link from 'next/link';
 
 const Header = async () => {
 
@@ -17,7 +18,9 @@ const Header = async () => {
   return (
     <header className='w-full border-b border-b-gray-300 g6'>
         <div className='flexBetween wrapper'>
-          <Image src="/assets/images/logo.svg" className='img' width={128} height={38} alt='logo' />
+          <Link href="/">
+            <Image src="/assets/images/logo.svg" className='img' width={128} height={38} alt='logo' />
+          </Link>
           {user && (<NavItems pathName={pathname!} />)}
           <UserButton />
         </div>

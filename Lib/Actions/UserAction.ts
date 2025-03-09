@@ -1,6 +1,5 @@
 "use server";
 
-import fs from 'fs';
 import { redirect } from "next/navigation";
 import { connectToDatabase } from "../Database";
 import User from "../Database/Models/UserModel";
@@ -14,42 +13,19 @@ import { auth } from "../auth";
 
 import { v4 as uuidv4 } from 'uuid';
 
-export const RegisterUser = async (formData: FormData) => {
+export const RegisterUser = async (imgURL: string, formData: FormData) => {
     const firstName = formData.get("firstName") as string;
     const lastName = formData.get("lastName") as string;
     const username = formData.get("username") as string;
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
     const confirmPassword = formData.get("confirmPassword") as string;
-    const photo = formData.get("photo") as File;
-
     const tail = uuidv4();
     
     try {
-        const uploadDir = process.env.UPLOAD_DIR;
-        const imgSrc = process.env.IMG_SRC;
+        if(!firstName || !lastName || !username || !email || !password) throw new Error("All Fields Are Required");
 
         const userNameValue = `${username}${tail}`;
-
-        const photoDir = `${uploadDir}${userNameValue}`;
-        const Avatar = `${photoDir}/${photo.name}`;
-
-        const userAvatar = (Avatar === `${photoDir}/undefined`) ? "/assets/images/placeholder.png" : `${imgSrc}${username}/${photo.name}`
-
-        if(photo.name == "undefined") {
-            console.log("There is no image")
-        } else {
-            if(!fs.existsSync(photoDir)) {
-                fs.mkdirSync(photoDir)
-            }
-
-            const arrayBuffer = await photo.arrayBuffer();
-            const buffer = new Uint8Array(arrayBuffer);
-
-            fs.writeFileSync(Avatar, buffer);
-        };
-
-        if(!firstName || !lastName || !username || !email || !password) throw new Error("All Fields Are Required");
         
         if(password !== confirmPassword) throw new Error("Your passwords doesn't match");
 
@@ -71,7 +47,7 @@ export const RegisterUser = async (formData: FormData) => {
             email,
             username: userNameValue,
             password: hashedPassord,
-            photo: userAvatar
+            photo: imgURL
         });
 
         const data = new ActionResponse(200, newUser);
