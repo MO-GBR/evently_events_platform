@@ -7,14 +7,11 @@ import Event from "../Database/Models/EventModel";
 import User from "../Database/Models/UserModel";
 import { ActionResponse, handleError } from "../Utils/responseHandle";
 import { getCuttentUser, getUser } from "./UserAction";
-import fs from 'fs';
 import { categories } from "@/Constants";
 import { redirect } from "next/navigation";
 
 export const createEvent = async (imgURL: string, formData: FormData) => {
     const user = await getCuttentUser();
-
-    const username = user.username;
 
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
@@ -71,8 +68,6 @@ export const getOneEvent = async (id: string) => {
 
 export const updateEvent = async ({ eventId, imgURL }: { eventId: string, imgURL: string }, formData: FormData) => {
     const user = await getCuttentUser();
-
-    const username = user.username;
 
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
@@ -178,8 +173,6 @@ export const addComment = async (eventId: string, formData:FormData) => {
     } catch (error) {
         handleError(error);
     }
-
-    // redirect(`/event/${eventId}`)
 };
 
 export const deleteEvent = async ({ eventId, path }: DeleteEventParams) => {
@@ -189,23 +182,6 @@ export const deleteEvent = async ({ eventId, path }: DeleteEventParams) => {
 
     try {
         if(user.username !== eventOrganizer.username) throw new Error("You are not allowed");
-
-        const uploadDir = process.env.UPLOAD_DIR;
-        const photoDir = `${uploadDir}${user.username}/events`;
-
-        const imageArray = event?.image.split("/");
-        const imageName = imageArray[imageArray.length - 1] as string;
-
-        const deletedPhoto = `${photoDir}/${imageName}`;
-
-        if(fs.existsSync(deletedPhoto)) {
-            fs.unlink(deletedPhoto, (err) => {
-                if (err) {
-                    handleError(err)
-                }
-                console.log('file deleted')
-            });
-        };
 
         await connectToDatabase();
         const deletedEvent = await Event.findByIdAndDelete(eventId);
@@ -231,6 +207,21 @@ export const saveEvent = async (eventId: string, actionType: string) => {
             }
 
         }
+    } catch (error) {
+        handleError(error);
+    }
+};
+
+export const getRelatedEvents = async (category: string, currentId: string) => {
+    let allRelatedEvents = [];
+
+    const event = await getOneEvent(currentId);
+    
+    try {
+        const relatedEvents = await Event.find({ category });
+        allRelatedEvents = JSON.parse(JSON.stringify(relatedEvents));
+        const filtered = allRelatedEvents.filter((e: any) => e._id !== JSON.parse(JSON.stringify(event._id)));
+        return filtered;
     } catch (error) {
         handleError(error);
     }

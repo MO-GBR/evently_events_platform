@@ -18,7 +18,7 @@ const Card = async ({ event }: { event: IEvent }) => {
   return (
     <div className='rounded-xl border-b shadow flex flex-col m-10 w-fit'>
         <div className='flex justify-end'>
-          <Image src={event.image} alt='card' width={350} height={200} className='img rounded-t-xl' />
+          <Image src={event.image} alt='card' width={350} height={200} className='img rounded-t-xl object-cover' />
           {
             currentUser &&
             (eventCreator.username === currentUser.username && (

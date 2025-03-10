@@ -1,10 +1,12 @@
-import { getOneEvent } from '@/Lib/Actions/EventActions';
+import { getOneEvent, getRelatedEvents } from '@/Lib/Actions/EventActions';
 import { getUser, getCuttentUser } from '@/Lib/Actions/UserAction';
 import { myTimestamp } from '@/Lib/Utils/dateAndTime';
 import Image from 'next/image'
 import React from 'react';
 import CommentSection from '@/Components/Shared/CommentSection';
 import EventCheckout from '@/Components/UI/EventCheckout';
+import Card from '@/Components/Shared/Card';
+import { IEvent } from '@/Lib/Database/Models/EventModel';
 
 
 const Event = async ({ params }: { params: Promise<{id: string}> }) => {
@@ -21,6 +23,8 @@ const Event = async ({ params }: { params: Promise<{id: string}> }) => {
     const eventData = JSON.parse(JSON.stringify(event));
 
     const currentUser = await getCuttentUser();
+
+    const relatedEvents = await getRelatedEvents(event?.category, event?._id);
 
     return (
         <div className='w-full flexCenter flex-col'>
@@ -41,7 +45,7 @@ const Event = async ({ params }: { params: Promise<{id: string}> }) => {
                         <p className='w-full'>{`${organizer.firstName} ${organizer?.lastName == undefined ? '' : organizer?.lastName}`}</p>
                     </div>
                     <div className='p-[1px] w-[80%] bg-gray-500 opacity-50 my-5' />
-                    <EventCheckout startDate={event?.startDate} startTime={event?.startTime} eventId={event?._id} />
+                    <EventCheckout startDate={event?.startDate} startTime={event?.startTime} event={JSON.parse(JSON.stringify(event))} userId={JSON.parse(JSON.stringify(currentUser?._id))} />
                     <div>
                         <div className='flex items-center'>
                             <Image src="/assets/icons/calendar.svg" alt="calendar" width={20} height={20} className='img w-[20px] m-3' />
@@ -60,6 +64,23 @@ const Event = async ({ params }: { params: Promise<{id: string}> }) => {
             </div>
             <div className='p-[1px] w-[90%] bg-gray-500 opacity-25 m-10' />
             { currentUser && <CommentSection event={eventData} /> }
+            <div className='w-full flexCenter'>
+                {
+                    relatedEvents.length > 0 && (
+                        <div className='w-full flexCenter flex-col'>
+                            <div className='p-[1px] w-[90%] bg-gray-500 opacity-25 m-10' />
+                            <p className='font-bold text-5xl'>Related Events</p>
+                            <div className='grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:gap-10'>
+                                {
+                                    relatedEvents.map((event: IEvent, index: any) => (
+                                        <Card key={index} event={event} />
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    )
+                }
+            </div>
         </div>
     )
 }
