@@ -10,6 +10,10 @@ import { IEvent } from '@/Lib/Database/Models/EventModel';
 
 import { createDate } from '@/Lib/Utils/dateAndTime'
 
+import { loadStripe } from '@stripe/stripe-js';
+
+loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
+
 const EventCheckout = ({ startDate, startTime, event, userId }: { startDate: string, startTime: string, event: IEvent, userId: string }) => {
     const isAvailable = createDate(startDate, startTime) > new Date();
     useEffect(() => {
