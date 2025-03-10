@@ -51,6 +51,7 @@ const Home = async ({ searchParams }: PageProps) => {
           limit={6}
           page={page}
           totalPages={events?.totalPages}
+          collectionType='cards'
         />
       </section>
     </>

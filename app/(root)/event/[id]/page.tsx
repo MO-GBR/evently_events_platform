@@ -26,6 +26,8 @@ const Event = async ({ params }: { params: Promise<{id: string}> }) => {
 
     const relatedEvents = await getRelatedEvents(event?.category, event?._id);
 
+    const userId = currentUser ? JSON.parse(JSON.stringify(currentUser?._id)) : 'noUser';
+
     return (
         <div className='w-full flexCenter flex-col'>
             <div className='flex justify-center items-start w-full'>
@@ -45,7 +47,7 @@ const Event = async ({ params }: { params: Promise<{id: string}> }) => {
                         <p className='w-full'>{`${organizer.firstName} ${organizer?.lastName == undefined ? '' : organizer?.lastName}`}</p>
                     </div>
                     <div className='p-[1px] w-[80%] bg-gray-500 opacity-50 my-5' />
-                    <EventCheckout startDate={event?.startDate} startTime={event?.startTime} event={JSON.parse(JSON.stringify(event))} userId={JSON.parse(JSON.stringify(currentUser?._id))} />
+                    <EventCheckout startDate={event?.startDate} startTime={event?.startTime} event={JSON.parse(JSON.stringify(event))} userId={userId} />
                     <div>
                         <div className='flex items-center'>
                             <Image src="/assets/icons/calendar.svg" alt="calendar" width={20} height={20} className='img w-[20px] m-3' />

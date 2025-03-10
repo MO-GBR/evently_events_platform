@@ -1,6 +1,6 @@
 "use server";
 
-import { GetAllEventsParams, DeleteEventParams } from "@/Types";
+import { GetAllEventsParams, DeleteEventParams, GetEventsByUserParams } from "@/Types";
 import { revalidatePath } from 'next/cache'
 import { connectToDatabase } from "../Database";
 import Event from "../Database/Models/EventModel";
@@ -175,22 +175,6 @@ export const addComment = async (eventId: string, formData:FormData) => {
     }
 };
 
-export const deleteEvent = async ({ eventId, path }: DeleteEventParams) => {
-    const event = await getOneEvent(eventId);
-    const eventOrganizer = await getUser(event.organizer)
-    const user = await getCuttentUser();
-
-    try {
-        if(user.username !== eventOrganizer.username) throw new Error("You are not allowed");
-
-        await connectToDatabase();
-        const deletedEvent = await Event.findByIdAndDelete(eventId);
-        if(deletedEvent) revalidatePath(path);
-    } catch (error) {
-        handleError(error);
-    }
-};
-
 export const saveEvent = async (eventId: string, actionType: string) => {
     const user = await getCuttentUser();
 
@@ -212,6 +196,38 @@ export const saveEvent = async (eventId: string, actionType: string) => {
     }
 };
 
+export const deleteEvent = async ({ eventId, path }: DeleteEventParams) => {
+    const event = await getOneEvent(eventId);
+    const eventOrganizer = await getUser(event.organizer)
+    const user = await getCuttentUser();
+
+    try {
+        if(user.username !== eventOrganizer.username) throw new Error("You are not allowed");
+
+        await connectToDatabase();
+
+        const users = await User.find();
+        if(users) {
+            users.map(async (user) => {
+                const isSaved = await user.savedPosts.includes(eventId);
+                if(isSaved) {
+                    const index = await user.savedPosts.indexOf(eventId);
+                    if (index > -1) {
+                        await user.savedPosts.splice(index, 1);
+                        await user.save();
+                    }
+                }
+            })
+        }
+
+        const deletedEvent = await Event.findByIdAndDelete(eventId);
+
+        if(deletedEvent) revalidatePath(path);
+    } catch (error) {
+        handleError(error);
+    }
+};
+
 export const getRelatedEvents = async (category: string, currentId: string) => {
     let allRelatedEvents = [];
 
@@ -222,6 +238,28 @@ export const getRelatedEvents = async (category: string, currentId: string) => {
         allRelatedEvents = JSON.parse(JSON.stringify(relatedEvents));
         const filtered = allRelatedEvents.filter((e: any) => e._id !== JSON.parse(JSON.stringify(event._id)));
         return filtered;
+    } catch (error) {
+        handleError(error);
+    }
+};
+
+export const getEventsByUser = async ({ userId, limit = 6, page }: GetEventsByUserParams) => {
+    try {
+        await connectToDatabase();
+
+        const conditions = { organizer: userId };
+        const skipAmount = (page - 1) * limit;
+
+        const eventsQuery = Event.find(conditions).sort({ createdAt: 'desc' }).skip(skipAmount).limit(limit);
+
+        const events = await populateEvent(eventsQuery);
+
+        const eventsCount = await Event.countDocuments(conditions);
+
+        return {
+            data: JSON.parse(JSON.stringify(events)),
+            totalPages: Math.ceil(eventsCount / limit)
+        }
     } catch (error) {
         handleError(error);
     }

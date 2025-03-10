@@ -22,7 +22,7 @@ const EventCheckout = ({ startDate, startTime, event, userId }: { startDate: str
             console.log('Order placed! You will receive an email confirmation.');
         };
         if (query.get('canceled')) {
-            console.log('Order canceled -- continue to shop around and checkout when you’re ready.');
+            console.log("Order canceled -- continue to shop around and checkout when you're ready.");
         }
     }, []);
 
@@ -38,7 +38,7 @@ const EventCheckout = ({ startDate, startTime, event, userId }: { startDate: str
     return (
         <div>
             {
-                userId
+                userId && userId != 'noUser'
                     ? (
                         <div>
                             {

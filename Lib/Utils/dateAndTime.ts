@@ -44,3 +44,8 @@ export const myTimestamp = (date: string, time: string) => {
     const data = createDate(date, time);
     return formatDateTime(data);
 };
+
+export const formatMongoDate = (date: string) => {
+    const data: Date = new Date(date);
+    return formatDateTime(data);
+};

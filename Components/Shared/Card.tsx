@@ -3,7 +3,6 @@ import { myTimestamp } from '@/Lib/Utils/dateAndTime';
 import Image from 'next/image'
 import Link from 'next/link';
 import React from 'react'
-import { FcBookmark } from "react-icons/fc";
 import { IEvent } from '@/Lib/Database/Models/EventModel'
 import DeleteIcon from '../UI/DeleteIcon';
 import SaveEvent from '../UI/SaveEvent';
@@ -13,7 +12,7 @@ const Card = async ({ event }: { event: IEvent }) => {
   const eventCreator = await getUser(event.organizer);
   const currentUser = await getCuttentUser();
 
-  const isSaved = currentUser && currentUser.savedPosts[currentUser.savedPosts.indexOf(event._id)] ? true : false;
+  const isSaved = currentUser && currentUser.savedPosts.includes(event._id);
 
   return (
     <div className='rounded-xl border-b shadow flex flex-col m-10 w-fit'>
@@ -31,7 +30,7 @@ const Card = async ({ event }: { event: IEvent }) => {
             ))
           }
         </div>
-        <div className='flex justify-start'>
+        <div className='flex justify-start rounded-t-xl'>
           <div className='p-2 px-2 w-[20%] text-center m-2 font-bold rounded-3xl text-green-800 bg-green-300 flexCenter'>{event.price}</div>
           <div className='p-2 px-2 w-fit text-center m-2 font-bold rounded-3xl text-gray-800 bg-gray-300 flexCenter'>{event.category}</div>
           <Link href={`/event/${event._id}`} className='p-2 px-3 w-[25%] m-2 rounded-3xl bg-black flexCenter'>
