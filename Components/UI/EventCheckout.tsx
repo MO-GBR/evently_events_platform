@@ -10,7 +10,7 @@ import { IEvent } from '@/Lib/Database/Models/EventModel';
 
 import { createDate } from '@/Lib/Utils/dateAndTime'
 
-const EventCheckout = async ({ startDate, startTime, event, userId }: { startDate: string, startTime: string, event: IEvent, userId: string }) => {
+const EventCheckout = ({ startDate, startTime, event, userId }: { startDate: string, startTime: string, event: IEvent, userId: string }) => {
     const isAvailable = createDate(startDate, startTime) > new Date();
     useEffect(() => {
         const query = new URLSearchParams(window.location.search);
