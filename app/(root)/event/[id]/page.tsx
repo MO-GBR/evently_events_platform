@@ -42,8 +42,8 @@ const Event = async ({ params }: { params: Promise<{id: string}> }) => {
                         <p className='w-[300px]'>{event?.description}</p>
                     </div>
                     <div className='flex items-center'>
-                        <div className='p-2 px-2 w-[20%] text-center m-2 font-bold rounded-3xl text-green-800 bg-green-300'>{event?.price}</div>
-                        <div className='p-2 px-2 w-[20%] text-center m-2 font-bold rounded-3xl text-gray-800 bg-gray-300'>{event?.category}</div>
+                        <div className='p-2 px-2 w-fit text-center m-2 font-bold rounded-3xl text-green-800 bg-green-300'>{event?.price}</div>
+                        <div className='p-2 px-2 w-fit text-center m-2 font-bold rounded-3xl text-gray-800 bg-gray-300'>{event?.category}</div>
                         <p className='font-bold mr-3'>By</p>
                         <p className='w-full'>{`${organizer.firstName} ${organizer?.lastName == undefined ? '' : organizer?.lastName}`}</p>
                     </div>
