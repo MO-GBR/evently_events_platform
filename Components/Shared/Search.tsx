@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useState, useEffect } from 'react'
 
-const Search = () => {
+const Search = ({ placeholder }: { placeholder: string }) => {
     const [ query, setQuery ] = useState("");
 
     const searchParams = useSearchParams();
@@ -39,7 +39,7 @@ const Search = () => {
             <Image src="/assets/icons/search.svg" alt='search' width={24} height={24} />
             <input
                 type='text'
-                placeholder='Search .....'
+                placeholder={placeholder}
                 onChange={(e) => setQuery(e.target.value)}
                 className='p-regular-16 w-full m-3 p-2 border-none outline-none bg-transparent'
             />

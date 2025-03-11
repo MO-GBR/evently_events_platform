@@ -69,7 +69,7 @@ export const createOrder = async (order: CreateOrderParams) => {
     }
 };
 
-export const getOrdersByEvent = async ({ searchString, eventId }: GetOrdersByEventParams) => {
+export const getOrdersByEvent = async ({ eventId, searchString }: GetOrdersByEventParams) => {
     try {
         await connectToDatabase();
 

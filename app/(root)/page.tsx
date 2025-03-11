@@ -41,7 +41,7 @@ const Home = async ({ searchParams }: PageProps) => {
       <section id="events" className="wrapper my-8 flex flex-col gap-8 md:gap-12">
         <h2 className="h2-bold">Trust by <br /> Thousands of Events</h2>
         <div className='w-full flexCenter'>
-          <Search />
+          <Search placeholder='Search .....' />
           <CategoryFilter />
         </div>
         <Collection

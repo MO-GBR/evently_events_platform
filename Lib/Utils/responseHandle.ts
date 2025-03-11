@@ -12,3 +12,7 @@ export class ActionResponse {
         this.data = data;
     }
 }
+
+export const handleJSON = (str: any) => {
+    return JSON.parse(JSON.stringify(str));
+}

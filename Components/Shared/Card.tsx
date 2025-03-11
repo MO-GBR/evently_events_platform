@@ -26,6 +26,11 @@ const Card = async ({ event }: { event: IEvent }) => {
                   <Image src="/assets/icons/edit.svg" alt='update' width={24} height={24} />
                 </Link>
                 <DeleteIcon eventId={event._id} />
+                <Link className='mb-1' href={`/orders/${event._id}`}>
+                  <div className='p-1 bg-gray-800 rounded-full'>
+                    <Image src="/assets/icons/logo-grey.svg" alt='orders' width={17} height={17} />
+                  </div>
+                </Link>
               </div>
             ))
           }

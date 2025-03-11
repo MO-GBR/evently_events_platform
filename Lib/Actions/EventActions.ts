@@ -9,6 +9,7 @@ import { ActionResponse, handleError } from "../Utils/responseHandle";
 import { getCuttentUser, getUser } from "./UserAction";
 import { categories } from "@/Constants";
 import { redirect } from "next/navigation";
+import Order from "../Database/Models/OrderModel";
 
 export const createEvent = async (imgURL: string, formData: FormData) => {
     const user = await getCuttentUser();
@@ -220,6 +221,19 @@ export const deleteEvent = async ({ eventId, path }: DeleteEventParams) => {
             })
         }
 
+        const event = await getOneEvent(eventId);
+
+        const conditions = { event: { $gt: event } };
+
+        const orders = await Order.find({ event });
+
+        if(orders) {
+            await Order.deleteMany(conditions).then(result => {
+                console.log('Delete result:', result);
+                console.log(`${result.deletedCount} users deleted successfully`);
+            });
+        };
+
         const deletedEvent = await Event.findByIdAndDelete(eventId);
 
         if(deletedEvent) revalidatePath(path);
@@ -243,12 +257,12 @@ export const getRelatedEvents = async (category: string, currentId: string) => {
     }
 };
 
-export const getEventsByUser = async ({ userId, limit = 6, page }: GetEventsByUserParams) => {
+export const getEventsByUser = async ({ userId, limit = 3, page }: GetEventsByUserParams) => {
     try {
         await connectToDatabase();
 
         const conditions = { organizer: userId };
-        const skipAmount = (page - 1) * limit;
+        const skipAmount = (Number(page) - 1) * limit;
 
         const eventsQuery = Event.find(conditions).sort({ createdAt: 'desc' }).skip(skipAmount).limit(limit);
 

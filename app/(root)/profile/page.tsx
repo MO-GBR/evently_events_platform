@@ -23,6 +23,7 @@ const Profile = async ({ searchParams }: PageProps) => {
 
     const orderedEvents = orders?.data.map((order: IOrder) => order?.event) || [];
     const organizedEvents = await getEventsByUser({ userId: user._id, page: eventsPage });
+    console.log(organizedEvents);
     
     return (
         <>
@@ -66,6 +67,26 @@ const Profile = async ({ searchParams }: PageProps) => {
                     urlParamName="ordersPage"
                     totalPages={orders?.totalPages}
                     collectionType='tickets'
+                />
+            </section>
+            <section>
+                <div className='wrapper flexCenter flex-col'>
+                    <h3 className='h3-bold text-center sm:text-left'>Events Organized</h3>
+                    <div className='my-3'>
+                        <Button title='Create New Event' href='/event/create' />
+                    </div>
+                </div>
+            </section>
+            <section className="wrapper my-8">
+                <Collection
+                    data={organizedEvents?.data}
+                    emptyTitle="No events have been created yet"
+                    emptyStateSubtext="Go create some now"
+                    limit={3}
+                    page={eventsPage}
+                    urlParamName="eventsPage"
+                    totalPages={organizedEvents?.totalPages}
+                    collectionType='cards'
                 />
             </section>
         </>

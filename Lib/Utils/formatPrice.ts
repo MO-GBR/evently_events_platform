@@ -16,3 +16,8 @@ export const removeDollarSign = (price: string) => {
 export const subCurrencyPrice = (price: string) => {
     return Math.round(Number(price) * 100);
 };
+
+export const price = (amount: string) => {
+    const str = removeDollarSign(amount);
+    return formatPrice(str);
+}
