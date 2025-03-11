@@ -228,3 +228,12 @@ body {
     @apply w-full m-3 outline-none border-none bg-transparent;
   }
 }
+
+/* ================== PURE CSS =================== */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background-color: white;
+  padding: 5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+}
