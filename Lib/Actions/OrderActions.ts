@@ -2,12 +2,10 @@
 
 import Stripe from 'stripe';
 import { connectToDatabase } from "../Database";
-import Event, { IEvent } from "../Database/Models/EventModel";
+import Event from "../Database/Models/EventModel";
 import Order from "../Database/Models/OrderModel";
 import User from "../Database/Models/UserModel";
-import { handleError, ActionResponse } from "../Utils/responseHandle";
-import { getOneEvent } from "./EventActions";
-import { getCuttentUser } from "./UserAction";
+import { handleError } from "../Utils/responseHandle";
 import { redirect } from 'next/navigation';
 import { ObjectId } from 'mongodb';
 import { CheckoutOrderParams, CreateOrderParams, GetOrdersByEventParams, GetOrdersByUserParams } from '@/Types';

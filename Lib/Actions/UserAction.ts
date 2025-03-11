@@ -59,6 +59,15 @@ export const RegisterUser = async (imgURL: string, formData: FormData) => {
     }
 };
 
+export const getUser = async (id: string) => {
+    try {
+        const user = await User.findById(id);
+        return user;
+    } catch (error) {
+        handleError(error);
+    }
+};
+
 export const login = async (formData: FormData) => {
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
@@ -85,15 +94,6 @@ export const getCuttentUser = async () => {
     try {
         await connectToDatabase();
         const user = await User.findOne({email});
-        return user;
-    } catch (error) {
-        handleError(error);
-    }
-};
-
-export const getUser = async (id: string) => {
-    try {
-        const user = await User.findById(id);
         return user;
     } catch (error) {
         handleError(error);

@@ -1,6 +1,7 @@
 import { getOneEvent, getRelatedEvents } from '@/Lib/Actions/EventActions';
 import { getUser, getCuttentUser } from '@/Lib/Actions/UserAction';
 import { myTimestamp } from '@/Lib/Utils/dateAndTime';
+import { handleJSON } from '@/Lib/Utils/responseHandle';
 import Image from 'next/image'
 import React from 'react';
 import CommentSection from '@/Components/Shared/CommentSection';
@@ -20,13 +21,13 @@ const Event = async ({ params }: { params: Promise<{id: string}> }) => {
 
     const organizer = await getUser(event?.organizer);
 
-    const eventData = JSON.parse(JSON.stringify(event));
+    const eventData = handleJSON(event);
 
     const currentUser = await getCuttentUser();
 
     const relatedEvents = await getRelatedEvents(event?.category, event?._id);
 
-    const userId = currentUser ? JSON.parse(JSON.stringify(currentUser?._id)) : 'noUser';
+    const userId = currentUser ? handleJSON(currentUser?._id) : 'noUser';
 
     return (
         <div className='w-full flexCenter flex-col'>

@@ -10,17 +10,19 @@ const UserButton = async () => {
     const user = session?.user;
     const userDoc = await getCuttentUser();
     return (
-        <div className='flexAround w-[20%] border p-2 rounded-2xl shadow-xl'>
+        <div className='flexAround w-[20%] max-md:w-[50%] border p-2 rounded-2xl shadow-xl' title={userDoc?.firstName}>
             {
                 user
                 ? (
                     <>
-                        <Image src={userDoc?.photo} alt='Avatar' width={50} height={50} className='rounded-full cursor-pointer' />
+                        <Link href="/profile">
+                            <Image src={userDoc?.photo} alt='Avatar' width={50} height={50} className='rounded-full cursor-pointer' />
+                        </Link>
                         <form action={async () => {
                             "use server";
                             await signOut();
                         }}>
-                            <button className='font-bold text-gray-800 cursor-pointer border-none outline-none' type="submit">
+                            <button className='font-bold text-gray-800 cursor-pointer border-none outline-none w-fit' type="submit">
                                 Sign Out
                             </button>
                         </form>

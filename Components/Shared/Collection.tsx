@@ -3,8 +3,6 @@ import React from 'react'
 import Card from './Card';
 import Pagination from './Pagination';
 import Ticket from './Ticket';
-import { getOneEvent } from '@/Lib/Actions/EventActions';
-
 
 type CollectionProps = {
     data: IEvent[],

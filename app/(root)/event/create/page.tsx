@@ -12,17 +12,17 @@ const CreateEvent = () => {
   const CreateNewEvent = createEvent.bind(null, file);
   return (
     <form className="flexCenter flex-col" action={CreateNewEvent}>
-        <div className="flex items-start justify-center">
-          <div className="w-[50vw] h-[80vh] p-10 bg-violet-700 rounded-2xl m-5">
+        <div className="flex items-start justify-center max-md:flexCenter max-md:flex-col-reverse">
+          <div className="w-[50vw] max-md:w-full h-[80vh] max-md:h-[90vh] p-10 bg-violet-700 rounded-2xl m-5">
             <label className="flexCenter flex-col">
               <span className="font-bold text-white">Tell us more about your event</span>
               <textarea className="w-full h-[40vh] border-none outline-none m-5 rounded-2xl p-3" placeholder="Write everything here !!!" name="details" />
             </label>
-            <label className="flexCenter">
+            <label className="flexCenter max-md:flex-col">
               <p className="font-bold text-white m-2">Location</p>
               <div className="w-full bg-white flexCenter rounded-full">
                 <Image src="/assets/icons/location-grey.svg" alt="calendar" width={20} height={20} className='img w-[20px] m-3' />
-                <input type="text" className="border-none outline-none w-[90%]" name="location" />
+                <input type="text" className="border-none outline-none w-[90%] max-md:w-[80%]" name="location" />
               </div>
             </label>
             <label className="flexCenter flex-col mt-5">

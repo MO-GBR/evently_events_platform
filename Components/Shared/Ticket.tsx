@@ -3,7 +3,6 @@ import { IEvent } from '@/Lib/Database/Models/EventModel'
 import Image from 'next/image'
 import Link from 'next/link';
 import { getUser, getCuttentUser } from '@/Lib/Actions/UserAction';
-import DeleteIcon from '../UI/DeleteIcon';
 
 const Ticket = async ({ event }: { event: IEvent }) => {
     const eventCreator = await getUser(event.organizer);

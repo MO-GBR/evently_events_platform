@@ -8,6 +8,7 @@ import { price } from '@/Lib/Utils/formatPrice';
 import { PageProps } from '@/Types'
 import React from 'react'
 import NotAllowed from '@/Components/UI/NotAllowed';
+import { handleJSON } from '@/Lib/Utils/responseHandle';
 
 const Orders = async ({ params, searchParams }: PageProps) => {
     const { id } = await params;
@@ -15,7 +16,7 @@ const Orders = async ({ params, searchParams }: PageProps) => {
 
     const event = await getOneEvent(id);
     const user = await getCuttentUser();
-    const eventOrganizer = await getUser(JSON.parse(JSON.stringify(event.organizer)))
+    const eventOrganizer = await getUser(handleJSON(event.organizer));
 
     const eventId = id as string;
     const searchText = (search?.query as string) || '';

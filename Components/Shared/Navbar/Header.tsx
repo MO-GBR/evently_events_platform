@@ -5,15 +5,13 @@ import UserButton from './UserButton'
 
 import { auth } from '@/Lib/auth';
 
-import { headers } from "next/headers";
 import Link from 'next/link';
+import MobileMenu from './MobileMenu';
 
 const Header = async () => {
 
   const session = await auth();
   const user = session?.user;
-  const headerList = await headers();
-  const pathname = headerList.get("x-current-path");
 
   return (
     <header className='w-full border-b border-b-gray-300 g6'>
@@ -21,7 +19,12 @@ const Header = async () => {
           <Link href="/">
             <Image src="/assets/images/logo.svg" className='img' width={128} height={38} alt='logo' />
           </Link>
-          {user && (<NavItems pathName={pathname!} />)}
+          {user && (
+            <>
+              <NavItems />
+              <MobileMenu />
+            </>
+          )}
           <UserButton />
         </div>
     </header>

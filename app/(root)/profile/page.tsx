@@ -8,12 +8,13 @@ import { getEventsByUser, getOneEvent } from '@/Lib/Actions/EventActions';
 import { getOrdersByUser } from '@/Lib/Actions/OrderActions';
 import { IOrder } from '@/Lib/Database/Models/OrderModel';
 import Collection from '@/Components/Shared/Collection';
+import { handleJSON } from '@/Lib/Utils/responseHandle';
 
 const Profile = async ({ searchParams }: PageProps) => {
     const search = await searchParams;
 
     const currentUser = await getCuttentUser();
-    const user = JSON.parse(JSON.stringify(currentUser));
+    const user = handleJSON(currentUser);
     const joinedAt = formatMongoDate(user?.createdAt);
 
     const ordersPage = Number(search?.ordersPage) || 1;
@@ -23,25 +24,24 @@ const Profile = async ({ searchParams }: PageProps) => {
 
     const orderedEvents = orders?.data.map((order: IOrder) => order?.event) || [];
     const organizedEvents = await getEventsByUser({ userId: user._id, page: eventsPage });
-    console.log(organizedEvents);
     
     return (
         <>
             <section className='bg-violet-100 w-full flexCenter'>
-                <div className='bg-slate-200 border border-gray-400 rounded-xl shadow-xl flex justify-start items-center p-5 m-5'>
+                <div className='bg-slate-200 border border-gray-400 rounded-xl shadow-xl flex justify-start items-center max-md:flex-col p-5 m-5'>
                     <Image src={user?.photo} width={100} height={100} className='img rounded-full' alt='avatar' />
                     <div className='m-3'>
-                        <div className='flex items-center justify-start'>
+                        <div className='flex items-center justify-start max-md:flex-col max-md:items-start max-md:my-5'>
                             <p className='font-bold'>Name:</p>
-                            <p className='ml-2 text-gray-700'>{`${user?.firstName} ${user?.lastName == undefined ? '' : user?.lastName}`}</p>
+                            <p className='ml-2 text-gray-700 max-md:ml-0'>{`${user?.firstName} ${user?.lastName == undefined ? "" : user?.lastName}`}</p>
                         </div>
-                        <div className='flex items-center justify-start'>
+                        <div className='flex items-center justify-start max-md:flex-col max-md:items-start max-md:my-5'>
                             <p className='font-bold'>username:</p>
-                            <p className='ml-2 text-gray-700'>{`@${user?.username}`}</p>
+                            <p className='ml-2 text-gray-700 max-md:ml-0'>{`@${user?.username}`}</p>
                         </div>
-                        <div className='flex items-center justify-start'>
+                        <div className='flex items-center justify-start max-md:flex-col max-md:items-start max-md:my-5'>
                             <p className='font-bold'>Joined At:</p>
-                            <p className='ml-2 text-gray-700'>{`${joinedAt.timeDate}`}</p>
+                            <p className='ml-2 text-gray-700 max-md:ml-0'>{`${joinedAt.timeDate}`}</p>
                         </div>
                         <div className='m-3'>
                             <Button title='Show Saved Posts' icon='/assets/icons/link.svg' href='/saved' />

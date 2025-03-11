@@ -223,16 +223,19 @@ export const deleteEvent = async ({ eventId, path }: DeleteEventParams) => {
 
         const event = await getOneEvent(eventId);
 
-        const conditions = { event: { $gt: event } };
-
         const orders = await Order.find({ event });
 
-        if(orders) {
-            await Order.deleteMany(conditions).then(result => {
-                console.log('Delete result:', result);
-                console.log(`${result.deletedCount} users deleted successfully`);
-            });
-        };
+        try {
+            if(orders) {
+                orders.map(async (order) => {
+                    await Order.findByIdAndDelete(order._id).then((res) => {
+                        console.log("Deleted Successfully");
+                    });
+                });
+            };
+        } catch (error) {
+            handleError(error);
+        }
 
         const deletedEvent = await Event.findByIdAndDelete(eventId);
 

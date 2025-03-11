@@ -1,12 +1,13 @@
 import Card from '@/Components/Shared/Card'
 import { getOneEvent, saveEvent } from '@/Lib/Actions/EventActions'
 import { getCuttentUser } from '@/Lib/Actions/UserAction'
-import { IEvent } from '@/Lib/Database/Models/EventModel'
+import { handleJSON } from '@/Lib/Utils/responseHandle';
+
 import React from 'react'
 
 const SavedPosts = async () => {
     const currentUser = await getCuttentUser();
-    const allSavedPosts = JSON.parse(JSON.stringify(currentUser?.savedPosts));
+    const allSavedPosts = handleJSON(currentUser?.savedPosts);
     return (
         <div className='overflow-x-hidden'>
             {
@@ -24,7 +25,7 @@ const SavedPosts = async () => {
                         }
                     </div>
                 ) : (
-                    <div className='allScreen flexCenter'>
+                    <div className='allScreen flexCenter max-md:text-center'>
                         <h1 className='h2-bold'>There is no saved events</h1>
                     </div>
                 )
