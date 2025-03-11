@@ -24,7 +24,6 @@ const CommentSection = ({event}: {event: IEvent}) => {
                 <input type='text' className='border-none outline-none w-[80%] ml-10' placeholder='Share a comment' name="comment" />
                 <div>
                     <button className='bg-blue-500 p-3 rounded-full flexCenter w-full' type="submit">
-                        <Image src="/Svg/Shape1.svg" alt='share' width={50} height={50} className='img w-[20px] m-3' />
                         <p className='text-white font-bold'>Share</p>
                     </button>
                 </div>

@@ -31,8 +31,8 @@ const Event = async ({ params }: { params: Promise<{id: string}> }) => {
 
     return (
         <div className='w-full flexCenter flex-col'>
-            <div className='flex justify-center items-start w-full'>
-                <Image src={event?.image} width={400} height={400} alt="event banner" className='m-5 rounded-2xl' />
+            <div className='flex justify-center items-start w-full max-md:flex-col'>
+                <Image src={event?.image} width={400} height={400} alt="event banner" className='m-5 rounded-2xl max-md:img max-md:w-[300px]' />
                 <div className='ml-5'>
                     <h1 className='h3-bold'>
                         {event?.title}
