@@ -14,7 +14,7 @@ const Header = async () => {
   const user = session?.user;
 
   return (
-    <header className='w-full border-b border-b-gray-300 g6'>
+    <header className='w-full border-b border-b-gray-300 g6 fixed top-0 left-0'>
         <div className='flexBetween wrapper'>
           <Link href="/">
             <Image src="/assets/images/logo.svg" className='img' width={128} height={38} alt='logo' />

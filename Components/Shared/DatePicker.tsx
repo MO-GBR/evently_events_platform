@@ -16,31 +16,55 @@ const DatePicker = ({ Picker }: { Picker: PickerProps }) => {
                 {
                     Picker.PickerType === "create"
                         ? (
-                            <div>
-                                <input type="time" className="border-none outline-none cursor-pointer bg-white p-2 m-2 rounded-xl" name='startTime' />
-                                <input type="date" className="border-none outline-none cursor-pointer bg-transparent text-white" name='startDate' />
+                            <div className="flexCenter max-md:flex-col max-md:p-2">
+                                <label className="flexCenter">
+                                    <span className="bg-white absolute p-2 rounded-xl border-2 border-violet-500 text-black font-bold text-center my-2 p-1 w-[200px] hidden max-md:block">Start Time</span>
+                                    <input type="time" className="border-none outline-none cursor-pointer bg-white p-2 m-2 rounded-xl" name='startTime' />
+                                </label>
+                                <label className="flexCenter">
+                                    <span className="bg-white absolute p-2 rounded-xl border-2 border-violet-500 text-black font-bold text-center my-2 p-1 w-[200px] hidden max-md:block">Start Date</span>
+                                    <input type="date" className="border-none outline-none cursor-pointer bg-transparent text-white" name='startDate' />
+                                </label>
                             </div>
                         ) : (
-                            <div>
-                                <input type="time" className="border-none outline-none cursor-pointer bg-white p-2 m-2 rounded-xl" name='startTime' defaultValue={Picker.startTimeDefaultValue} />
-                                <input type="date" className="border-none outline-none cursor-pointer bg-transparent text-white" name='startDate' defaultValue={Picker.startDateDefaultValue} />
+                            <div className="flexCenter max-md:flex-col max-md:p-2">
+                                <label className="flexCenter">
+                                    <span className="bg-white absolute p-2 rounded-xl border-2 border-violet-500 text-black font-bold text-center my-2 p-1 w-[200px] hidden max-md:block">Start Time</span>
+                                    <input type="time" className="border-none outline-none cursor-pointer bg-white p-2 m-2 rounded-xl" name='startTime' defaultValue={Picker.startTimeDefaultValue} />
+                                </label>
+                                <label className="flexCenter">
+                                    <span className="bg-white absolute p-2 rounded-xl border-2 border-violet-500 text-black font-bold text-center my-2 p-1 w-[200px] hidden max-md:block">Start Date</span>
+                                    <input type="date" className="border-none outline-none cursor-pointer bg-transparent text-white" name='startDate' defaultValue={Picker.startDateDefaultValue} />
+                                </label>
                             </div>
                         )
                 }
             </label>
             <label className="flexCenter flex-col g7 m-1 p-2 rounded-2xl">
-                <span className="font-bold text-white">End Date</span>
+                <span className="font-bold text-white">Ends At</span>
                 {
                     Picker.PickerType === "create"
                         ? (
-                            <div>
-                                <input type="time" className="border-none outline-none cursor-pointer bg-white p-2 m-2 rounded-xl" name='endTime' />
-                                <input type="date" className="border-none outline-none cursor-pointer bg-transparent text-white" name='endDate' />
+                            <div className="flexCenter max-md:flex-col max-md:p-2">
+                                <label className="flexCenter">
+                                    <span className="bg-white absolute p-2 rounded-xl border-2 border-violet-500 text-black font-bold text-center my-2 p-1 w-[200px] hidden max-md:block">End Time</span>
+                                    <input type="time" className="border-none outline-none cursor-pointer bg-white p-2 m-2 rounded-xl" name='endTime' />
+                                </label>
+                                <label className="flexCenter">
+                                    <span className="bg-white absolute p-2 rounded-xl border-2 border-violet-500 text-black font-bold text-center my-2 p-1 w-[200px] hidden max-md:block">End Date</span>
+                                    <input type="date" className="border-none outline-none cursor-pointer bg-transparent text-white" name='endDate' />
+                                </label>
                             </div>
                         ) : (
-                            <div>
-                                <input type="time" className="border-none outline-none cursor-pointer bg-white p-2 m-2 rounded-xl" name='endTime' defaultValue={Picker.endTimeDefaultValue} />
-                                <input type="date" className="border-none outline-none cursor-pointer bg-transparent text-white" name='endDate' defaultValue={Picker.endDateDefaultValue} />
+                            <div className="flexCenter max-md:flex-col max-md:p-2">
+                                <label className="flexCenter">
+                                    <span className="bg-white absolute p-2 rounded-xl border-2 border-violet-500 text-black font-bold text-center my-2 p-1 w-[200px] hidden max-md:block">End Time</span>
+                                    <input type="time" className="border-none outline-none cursor-pointer bg-white p-2 m-2 rounded-xl" name='endTime' defaultValue={Picker.endTimeDefaultValue} />
+                                </label>
+                                <label className="flexCenter">
+                                    <span className="bg-white absolute p-2 rounded-xl border-2 border-violet-500 text-black font-bold text-center my-2 p-1 w-[200px] hidden max-md:block">End Date</span>
+                                    <input type="date" className="border-none outline-none cursor-pointer bg-transparent text-white" name='endDate' defaultValue={Picker.endDateDefaultValue} />
+                                </label>
                             </div>
                         )
                 }
